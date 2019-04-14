@@ -10,6 +10,7 @@ namespace Zgadywanka_Lab3
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Starting");
         }
     }
 }
