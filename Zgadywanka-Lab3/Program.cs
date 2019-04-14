@@ -11,6 +11,10 @@ namespace Zgadywanka_Lab3
         static void Main(string[] args)
         {
             Console.WriteLine("Starting");
+            Console.WriteLine("Provide input character");
+            string character = Console.ReadLine();
+
+            Console.Read();
         }
     }
 }
