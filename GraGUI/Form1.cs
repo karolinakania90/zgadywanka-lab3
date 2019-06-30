@@ -8,41 +8,112 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ModelGry;
-
+using static ModelGry.Gra;
 
 namespace GraGUI
 {
     public partial class Form1 : Form
     {
-        private Gra g;
+        private ModelGry.Gra g;
+        private DateTime czasRozpoczecia;
+
         public Form1()
         {
             InitializeComponent();
+            Text = "GRA";
         }
 
-        private void NowaGra_Click(object sender, EventArgs e)
+        private void buttonNowaGra_Click(object sender, EventArgs e)
         {
-            Losuj.Visible = true;
-            NowaGra.Enabled = false; 
+            // wyczysc stan gry
+            
+            groupBoxLosuj.Visible = true;
+            groupBoxZgadnij.Visible = true;
+            buttonNowaGra.Enabled = false;
+            textBoxOdpowiedz.Text = "";
+            labelLiczbaProb.Visible = false;
+            labelLiczbaProbText.Visible = false;
+
+            labelWynik.Visible = false;
+
+            textBoxOd.Enabled = true;
+            textBoxOd.Text = "";
+            textBoxDo.Enabled = true;
+            textBoxDo.Text = "";
+
+            buttonLosuj.Enabled = true;
         }
-        private void losuj_Click(object sender, EventArgs e)
+
+        private void buttonLosuj_Click(object sender, EventArgs e)
         {
+            if (textBoxOd.Text == null || textBoxOd.Text == "")
+            {
+                MessageBox.Show("Podaj poprawna odpowiedz");
+                return;
+            }
+
+            if (textBoxOd.Text == null || textBoxOd.Text == "")
+            {
+                MessageBox.Show("Podaj poprawna odpowiedz");
+                return;
+            }
+
             // wczytaj zakres do losowania
-            int a = int.Parse(ZakresOd.Text);
-            int b = int.Parse(ZakresDo.Text);
+            int a = int.Parse( textBoxOd.Text );
+            int b = int.Parse( textBoxDo.Text );
 
-            //utwórz grę
-            g = new Gra(a, b);
+            // utwórz grę
+            g = new ModelGry.Gra(a, b);
 
-            ZakresOd.Enabled = false;
-            ZakresDo.Enabled = false;
-            Losuj.Enabled = false;
+            textBoxOd.Enabled = false;
+            textBoxDo.Enabled = false;
+            buttonLosuj.Enabled = false;
+            buttonSprawdz.Enabled = true;
+            textBoxOdpowiedz.Enabled = true;
+            czasRozpoczecia = DateTime.Now;
+        }
 
+        private void GroupBox1_Enter(object sender, EventArgs e)
+        {
 
+        }
 
-            // wyświetl kolejne elementy formularza
+        private void ButtonSprawdz_Click(object sender, EventArgs e)
+        {
+            int mojaOdpowiedz = int.Parse(textBoxOdpowiedz.Text);
+             
+            Odpowiedz odpowiedz = g.Ocena(mojaOdpowiedz);
+            labelLiczbaProb.Text = Convert.ToString(g.LicznikRuchow);
 
+            labelLiczbaProb.Visible = true;
+            labelLiczbaProbText.Visible = true;
+            labelWynik.Visible = true;
 
+            // wyswietl wynik
+
+            if (odpowiedz == Odpowiedz.ZaMalo)
+            {
+                labelWynik.Text = "Za mało! Zgaduj dalej!";
+            }
+            else if(odpowiedz == Odpowiedz.ZaDuzo)
+            {
+                labelWynik.Text = "Za dużo! Zgaduj dalej!";
+            }
+            else
+            {
+                double sekund = (DateTime.Now - czasRozpoczecia).Seconds;
+                labelWynik.Text = $"Brawo! Zgadłeś za {g.LicznikRuchow} razem w ciągu {sekund} sekund!";
+
+                // pozwol na rozpoczecie nowej gry
+                textBoxOdpowiedz.Enabled = false;
+  
+                buttonSprawdz.Enabled = false;
+                buttonNowaGra.Enabled = true;
+            }           
+        }
+
+        private void LabelLiczbaProb_Click(object sender, EventArgs e)
+        {
 
         }
     }

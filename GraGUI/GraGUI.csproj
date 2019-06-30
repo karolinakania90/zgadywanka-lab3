@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -65,6 +66,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -81,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ModelGry\ModelGry.csproj">
-      <Project>{e0fd195b-ebf5-47a8-bb61-bef6f0de58ad}</Project>
+      <Project>{c34b0ee3-4f01-417a-ac62-d3cb5f4d583a}</Project>
       <Name>ModelGry</Name>
     </ProjectReference>
   </ItemGroup>
